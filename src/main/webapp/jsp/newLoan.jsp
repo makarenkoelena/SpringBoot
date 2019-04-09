@@ -14,12 +14,12 @@
 		<table>
 			<tr>
 				<td>Cust ID:</td>
-				<td><form:input path="${cid}" /> <form:errors
-						path="cust.cid" /></td>
+				<td><form:input path="cust.cId" /> <form:errors
+						path="cust.cId" /></td>
 			</tr>
 			<tr>
 				<td>Book id:</td>
-				<td><form:input path="bid" /> <form:errors
+				<td><form:input path="book.bid" /> <form:errors
 						path="book.bid" /></td>
 			</tr>
 			<tr>

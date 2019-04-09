@@ -33,11 +33,8 @@ public class LoanController {
 	public String addLoanPost(@Valid @ModelAttribute ("loans") Loan loan, BindingResult result) {
 		if (result.hasErrors()) {
 			System.out.println("error");
-			return "newLoan";
+			return "addLoan";
 		}
-//		if(ls.findLoan(loan)){
-//			
-//		}
 		ls.addLoan(loan);
 		return "redirect:/showLoans";
 	}
@@ -55,5 +52,5 @@ public class LoanController {
 		}
 		ls.deleteLoan(loan);
 		return "redirect:/showLoans";
-	}	
+	}		
 }

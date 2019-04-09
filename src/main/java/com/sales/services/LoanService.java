@@ -19,8 +19,8 @@ public class LoanService {
 	public void deleteLoan(Loan l){
 		lr.delete(l);
 	}
-	public void findLoan(Long l){
-		lr.findOne(l);
-	}
-	
+	public Long findLoan(Long lid){
+		lr.findOne(lid);
+		return lid;
+	}	
 }
