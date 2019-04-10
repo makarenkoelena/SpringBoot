@@ -1,7 +1,7 @@
 package com.sales.exceptions;
 
-public class BookorCustomerNotFoundException {
+public class BookorCustomerNotFoundException extends RuntimeException{
 	public BookorCustomerNotFoundException(String message){
-		
+		super(message);
 	}
 }
