@@ -9,18 +9,19 @@ import com.sales.repositories.LoanRepository;
 public class LoanService {
 	@Autowired
 	LoanRepository lr;
-	
+
 	public Iterable<Loan> getLoans(){
 		return lr.findAll();
 	}
+	
 	public void addLoan(Loan l){
 		lr.save(l);
-	}	
+	}
+		
 	public void deleteLoan(Loan l){
 		lr.delete(l);
 	}
-	public Long findLoan(Long lid){
-		lr.findOne(lid);
-		return lid;
-	}	
+	public Loan findLoan(Long lid){
+		return lr.findOne(lid);
+	}		
 }

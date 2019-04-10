@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sales.models.Customer;
 import com.sales.services.CustomerService;
 
-
 @Controller
 public class CustomerController {
 	@Autowired
@@ -37,6 +36,7 @@ public class CustomerController {
 			System.out.println("error");
 			return "addCustomer";
 		}
+		
 		cs.addCustomer(customer);
 		return "redirect:/showCustomers";
 	}
