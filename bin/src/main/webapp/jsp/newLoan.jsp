@@ -9,14 +9,29 @@
 <title>Final Project</title>
 </head>
 <body>
-	<h1>Could not delete Loan</h1>
-
-	<p>${error.message}</p>
+	<h1>New Loan</h1>
+	<form:form modelAttribute="loans">
+		<table>
+			<tr>
+				<td>Cust ID:</td>
+				<td><form:input path="cust.cId" /> <form:errors
+						path="cust.cId" /></td>
+			</tr>
+			<tr>
+				<td>Book id:</td>
+				<td><form:input path="book.bid" /> <form:errors
+						path="book.bid" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Loan Book!" /></td>
+			</tr>
+		</table>
+	</form:form>
 
 	<a href="/">Home</a>
 	<a href="/showBooks">List Books</a>
 	<a href="/showCustomers">List Customers</a>
 	<a href="/showLoans">List Loans</a>
-	<a href="/newLoan">New Loan</a>
+
 </body>
 </html>

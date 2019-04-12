@@ -34,36 +34,17 @@ public class LoanController {
 	}
 
 	@RequestMapping(value = "/newLoan",method=RequestMethod.POST)
-	public String addLoanPost(@Valid @ModelAttribute ("loans") Loan loan, BindingResult result) {
-		//		if ((bs.findBook(loan.getBook().getBid()) == null) || (cs.findCustomer(loan.getCust().getcId()) == null)){
-		//			return "errorAddLoanPage";
-		//		}
-		//		
-		//		Book b = bs.findBook(loan.getBook().getBid());
-		//		Customer c = cs.findCustomer(loan.getCust().getcId());
-		//		if (b.getBid() == loan.getBook().getBid() || (c.getcId() == loan.getCust().getcId())){
-		//			return "errorAddLoanPage2";
-		//		}
-		//		
+	public String addLoanPost(@Valid @ModelAttribute ("loans") Loan loan, BindingResult result, Model model) {
+		
 		if (result.hasErrors()) {
 			System.out.println("error");
 			return "addLoan";
 		}
-		//		Customer customer = cs.findCustomer(loan.getCust().getcId());
-		//
-		//		LocalDate dueDate =  LocalDate.now().plusDays(customer.getLoanPeriod());
-		//		System.out.println("loan.getCust().getLoanPeriod(): "+loan.getCust().getLoanPeriod());
-		//		System.out.println("Adding days to the current date: "+dueDate);		
-		//		System.out.println("customer.cid()"+loan.getCust().getcId());
-		//		loan.setDueDate(dueDate.toString());
-		//	
-		//https://www.tutorialspoint.com/spring_boot/spring_boot_exception_handling.htm
 		try{
 			ls.addLoan(loan);
-		}catch (BookorCustomerNotFoundException e){
+		}catch (BookorCustomerNotFoundException | BookOnLoanException e){
+			model.addAttribute("error", e);
 			return "errorAddLoanPage";
-		}catch (BookOnLoanException e){
-			return "errorAddLoanPage2";
 		}
 
 		return "redirect:/showLoans";
@@ -77,7 +58,7 @@ public class LoanController {
 	}
 
 	@RequestMapping(value = "/deleteLoan",method=RequestMethod.POST)
-	public String deleteLoanPost(@Valid @ModelAttribute ("loans") Loan loan, BindingResult result) {
+	public String deleteLoanPost(@Valid @ModelAttribute ("loans") Loan loan, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			System.out.println("error");
 			return "deleteLoan";
@@ -85,6 +66,8 @@ public class LoanController {
 		try{
 			ls.deleteLoan(loan);
 		}catch (NoSuchLoanException e){
+//			e.printStackTrace();
+			model.addAttribute("error", e);
 			return "errorDeleteLoan";
 		}
 		return "redirect:/showLoans";

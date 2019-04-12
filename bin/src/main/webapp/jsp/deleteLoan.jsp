@@ -9,14 +9,24 @@
 <title>Final Project</title>
 </head>
 <body>
-	<h1>Could not delete Loan</h1>
-
-	<p>${error.message}</p>
-
+	<h1>Delete Loan</h1>
+<body>
+	<form:form modelAttribute="loans">
+		<table>
+			<tr>
+				<td>Loan ID:</td>
+				<td><form:input path="lid" /> <form:errors path="lid" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Delete" /></td>
+			</tr>
+		</table>
+	</form:form>
 	<a href="/">Home</a>
 	<a href="/showBooks">List Books</a>
 	<a href="/showCustomers">List Customers</a>
 	<a href="/showLoans">List Loans</a>
-	<a href="/newLoan">New Loan</a>
+	<a href="/deleteLoan">Delete Loan</a>
+	<a href="/logout">Logout</a>
 </body>
 </html>

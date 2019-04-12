@@ -28,30 +28,34 @@ public class LoanService {
 	public Loan findLoan(Long lid){
 		return lr.findOne(lid);
 	}
-	public void addLoan(Loan loan) throws BookorCustomerNotFoundException{
+	public void addLoan(Loan loan) throws BookorCustomerNotFoundException, BookOnLoanException{
 		Book bookINdb = bs.findBook(loan.getBook().getBid());//foundBook
 		Customer customerINdb = cs.findCustomer(loan.getCust().getcId());
 
 		if (bookINdb == null || customerINdb == null){
-			throw new BookorCustomerNotFoundException("Error");
-		}
-		if (bookINdb.getBid() == loan.getBook().getBid() || (customerINdb.getcId() == loan.getCust().getcId())){
-			throw new BookOnLoanException("Error");
+			throw new BookorCustomerNotFoundException("No such Customer: " + loan.getCust().getcId() + " No such Book: " + loan.getBook().getBid());
 		}
 
 		LocalDate dueDate =  LocalDate.now().plusDays(customerINdb.getLoanPeriod());
-		System.out.println("loan.getCust().getLoanPeriod(): "+loan.getCust().getLoanPeriod());
-		System.out.println("Adding days to the current date: "+dueDate);		
-		System.out.println("customer.cid()"+loan.getCust().getcId());
+		//System.out.println("loan.getCust().getLoanPeriod(): "+loan.getCust().getLoanPeriod());
+		//System.out.println("Adding days to the current date: "+dueDate);		
+		//System.out.println("customer.cid()"+loan.getCust().getcId());
 		loan.setDueDate(dueDate.toString());
 
-		lr.save(loan);
+		try{
+			lr.save(loan);
+		}catch (Exception e){
+			throw new BookOnLoanException("Book: " + loan.getBook().getBid() + loan.getBook().getTitle() + " already on Loan to Customer: " + loan.getCust().getcId() + loan.getCust().getcName());
+		}			
 	}
-	public void deleteLoan(Loan loan){
-		Loan loanINdb = ls.findLoan(loan.getLid());
-		if (loanINdb.getLid() != loan.getLid() && loanINdb.getLid() ==null ){
-			throw new NoSuchLoanException("error");
+	public void deleteLoan(Loan loan)throws NoSuchLoanException{
+		Loan l = ls.findLoan(loan.getLid());
+		System.out.println(l);
+		if(l ==null) {
+			throw new NoSuchLoanException("No such Loan: " + loan.getLid());
 		}
+
 		lr.delete(loan);
+
 	}
 }

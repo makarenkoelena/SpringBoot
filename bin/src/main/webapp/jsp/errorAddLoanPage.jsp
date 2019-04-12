@@ -12,9 +12,10 @@
 	<h1>Could not create New Loan</h1>
 <body>
 
-
-	<p>${error.message}</p>
-
+	<form:form modelAttribute="loans">
+		<p>No such Customer:${loans.cust.cId}</p>
+		<p>No such Book: ${loans.book.bid}</p>
+	</form:form>
 
 </body>
 

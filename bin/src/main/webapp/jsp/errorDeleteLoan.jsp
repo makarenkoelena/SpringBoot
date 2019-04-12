@@ -11,7 +11,9 @@
 <body>
 	<h1>Could not delete Loan</h1>
 
-	<p>${error.message}</p>
+	<form:form modelAttribute="loans">
+		<p>No such Loan: ${loans.lid}</p>
+	</form:form>
 
 	<a href="/">Home</a>
 	<a href="/showBooks">List Books</a>
