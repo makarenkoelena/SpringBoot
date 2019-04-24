@@ -29,14 +29,14 @@ public class LoanService {
 		return lr.findOne(lid);
 	}
 	public void addLoan(Loan loan) throws BookorCustomerNotFoundException, BookOnLoanException{
-		Book bookINdb = bs.findBook(loan.getBook().getBid());//foundBook
-		Customer customerINdb = cs.findCustomer(loan.getCust().getcId());
+		Book book = bs.findBook(loan.getBook().getBid());//foundBook
+		Customer customer = cs.findCustomer(loan.getCust().getcId());
 
-		if (bookINdb == null || customerINdb == null){
+		if (book == null || customer == null){
 			throw new BookorCustomerNotFoundException("No such Customer: " + loan.getCust().getcId() + " No such Book: " + loan.getBook().getBid());
 		}
 
-		LocalDate dueDate =  LocalDate.now().plusDays(customerINdb.getLoanPeriod());
+		LocalDate dueDate =  LocalDate.now().plusDays(customer.getLoanPeriod());
 		//System.out.println("loan.getCust().getLoanPeriod(): "+loan.getCust().getLoanPeriod());
 		//System.out.println("Adding days to the current date: "+dueDate);		
 		//System.out.println("customer.cid()"+loan.getCust().getcId());
@@ -45,7 +45,7 @@ public class LoanService {
 		try{
 			lr.save(loan);
 		}catch (Exception e){
-			throw new BookOnLoanException("Book: " + loan.getBook().getBid() + loan.getBook().getTitle() + " already on Loan to Customer: " + loan.getCust().getcId() + loan.getCust().getcName());
+			throw new BookOnLoanException("Book: " + loan.getBook().getBid() + " "+ book.getTitle() + " already on Loan to Customer: " + loan.getCust().getcId() + " " + customer.getcName());
 		}			
 	}
 	public void deleteLoan(Loan loan)throws NoSuchLoanException{
